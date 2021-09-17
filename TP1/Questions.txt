@@ -1,0 +1,17 @@
+1.Identifiez un patron de conception autre que Fluent Builder dans le tp.
+	b. Donnez un brève description du patron et comment it est utilisé dans le tp.
+
+
+//Espace pour écrire 
+//
+//
+//
+
+2. Donnez une explication du patron composite.
+	b. Comment le patron composite aurait pu être utilisé dans ce travail pratique? 
+
+//Espace pour écrire 
+//
+//
+//
+	   
