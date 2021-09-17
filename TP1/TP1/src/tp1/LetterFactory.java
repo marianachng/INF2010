@@ -20,7 +20,7 @@ public final class LetterFactory {
 
     // TODO
     public static BaseShape create_C() {
-        return null
+        return null;
     }
 
     // TODO
