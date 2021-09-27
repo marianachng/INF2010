@@ -19,22 +19,13 @@ public final class LetterFactory {
     }
 
     // TODO
-    public static BaseShape create_C() {
-        return null;
-    }
-
-    // TODO
     public static BaseShape create_l() {
-        return null;
+        Rectangle rectangle_l = new Rectangle(halfStripeThickness, maxHeight);
+        return rectangle_l;
     }
 
     // TODO
     public static BaseShape create_i() {
-        return null;
-    }
-
-    // TODO
-    public static BaseShape create_A() {
         return null;
     }
 
@@ -44,6 +35,11 @@ public final class LetterFactory {
     }
 
     // TODO
+    public static BaseShape create_B() {
+        return null;
+    }
+
+    // not TODO
     public static BaseShape create_n() {
         return null;
     }
@@ -54,7 +50,12 @@ public final class LetterFactory {
     }
 
     // TODO
-    public static BaseShape create_B() {
+    public static BaseShape create_C() {
+        return null;
+    }
+
+    // TODO
+    public static BaseShape create_A() {
         return null;
     }
 }
