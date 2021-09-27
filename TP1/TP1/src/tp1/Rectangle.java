@@ -7,39 +7,32 @@ import java.util.Collection;
 public class Rectangle extends BaseShape {
     // TODO creer un rectangle avec une largeur et une longueur.
     public Rectangle(Double width, Double height) {
-        /*Point2d topLeftCorner = new Point2d(-width / 3, height / 3);
-        Point2d topMiddle = new Point2d(0.0, height / 3);
-        Point2d topRightCorner = new Point2d(width / 3, height / 3);
-        Point2d bottomLeftCorner = new Point2d(-width / 3, -height / 3);
-        Point2d bottomMiddle = new Point2d(0.0, -height / 3);
-        Point2d bottomRightCorner = new Point2d(width / 3, -height / 3);
-        Collection<Point2d> corners = new ArrayList<Point2d>(Arrays.asList(
-                topLeftCorner, topMiddle, topRightCorner, bottomRightCorner, bottomMiddle, bottomLeftCorner));*/
-        //On aurait pu mettre 4 .add (une pour chaque Point2D);
-        for (int i = 0; i < width; i++){
-            for (int j = 0; j < height; j++){
-                this.add(new Point2d((double) i, (double)j));
+        int numPointPerLine = 40; // if too low ,gives low res image;
+        Double deltaX = width / numPointPerLine;
+        Double deltaY = height / numPointPerLine;
+        Collection<Point2d> points = new ArrayList<Point2d>();
+        for(int i = 0; i < numPointPerLine; i++){
+            for(int j = 0; j < numPointPerLine; j++){
+                points.add(new Point2d(-width / 2 + i * deltaX, -height / 2 + j * deltaY));
             }
         }
+        addAll(points);
     }
 
     // TODO creer un rectangle avec les dimensions contenu dans un Point.
     public Rectangle(Point2d dimensions) {
         Double width = dimensions.X();
         Double height = dimensions.Y();
-        /*Point2d topLeftCorner = new Point2d(-width / 3, height / 3);
-        Point2d topMiddle = new Point2d(0.0, height / 3);
-        Point2d topRightCorner = new Point2d(width / 3, height / 3);
-        Point2d bottomLeftCorner = new Point2d(-width / 3, -height / 3);
-        Point2d bottomMiddle = new Point2d(0.0, -height / 3);
-        Point2d bottomRightCorner = new Point2d(width / 3, -height / 3);
-        Collection<Point2d> corners = new ArrayList<Point2d>(Arrays.asList(
-                topLeftCorner, topMiddle, topRightCorner, bottomRightCorner, bottomMiddle, bottomLeftCorner));*/
-        for (int i = 0; i < width; i++){
-            for (int j = 0; j < height; j++){
-                this.add(new Point2d((double) i, (double)j));
+        int numPointPerLine = 5;
+        Double deltaX = width / numPointPerLine;
+        Double deltaY = height / numPointPerLine;
+        Collection<Point2d> points = new ArrayList<Point2d>();
+        for(int i = 0; i < numPointPerLine; i++){
+            for(int j = 0; j < numPointPerLine; j++){
+                points.add(new Point2d(-width / 2 + i * deltaX, -height / 2 + j * deltaY));
             }
         }
+        addAll(points);
     }
 
     // TODO initialiser le parent.
