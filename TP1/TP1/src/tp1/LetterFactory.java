@@ -1,5 +1,6 @@
 package tp1;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public final class LetterFactory {
@@ -13,24 +14,61 @@ public final class LetterFactory {
     // TODO
     public static BaseShape create_e() {
         BaseShape letterE = new BaseShape();
-        letterE.add(new Ellipse(halfMaxWidth, halfMaxHeight));
-        letterE.add(new Ellipse(halfMaxWidth - halfStripeThickness, halfMaxHeight - halfStripeThickness));
-        letterE.add(new Ellipse(halfMaxWidth - halfStripeThickness / 2, halfMaxHeight - halfStripeThickness / 2));
+        Ellipse outerEllipse = new Ellipse(halfMaxWidth, halfMaxHeight);
+        Rectangle rect = new Rectangle(maxWidth, stripeThickness);
 
-        letterE.add(new Rectangle(maxWidth, stripeThickness));
+        Double innerWidthRadius = halfMaxWidth - halfStripeThickness;
+        Double innerHeigthRadius = halfMaxHeight - halfStripeThickness;
+
+        ArrayList<Point2d> toRemove = new ArrayList<>();
+        for(Point2d point : outerEllipse.getCoords()){
+            if(Math.sqrt(Math.pow(point.X(), 2) / Math.pow(innerWidthRadius, 2) +
+                    Math.pow(point.Y(), 2) / Math.pow(innerHeigthRadius, 2)) <= 1){
+                toRemove.add(point);
+            }else if(point.Y() >= 0){
+                toRemove.add(point);
+            }
+        }
+        outerEllipse.removeAll(toRemove);
+        toRemove.clear();
+        for(Point2d point : rect.getCoords()){
+            if(point.Y() >= 0){
+                toRemove.add(point);
+            }
+        }
+        rect.removeAll(toRemove);
+        BaseShape topHalf = outerEllipse.add(rect).clone();
+        BaseShape bottomHalf = topHalf.clone().rotate(Math.PI);
+        toRemove.clear();
+        for(Point2d point : bottomHalf.getCoords()){
+            if(point.Y() >= halfStripeThickness && point.Y() <= stripeThickness * 1.5 && point.X() > 0){
+                toRemove.add(point);
+            }
+        }
+        letterE.add(topHalf).add(bottomHalf.removeAll(toRemove));
+
         return letterE;
     }
 
     // TODO
     public static BaseShape create_a() {
         BaseShape letter_a = new BaseShape();
-        letter_a.add(new Ellipse(halfMaxWidth, halfMaxHeight));
-        letter_a.add(new Ellipse(halfMaxWidth - halfStripeThickness, halfMaxHeight - halfStripeThickness));
-        letter_a.add(new Ellipse(halfMaxWidth - halfStripeThickness / 2, halfMaxHeight - halfStripeThickness / 2));
+        Ellipse outerEllipse = new Ellipse(halfMaxWidth, halfMaxHeight);
+        Double innerWidthRadius = halfMaxWidth - halfStripeThickness;
+        Double innerHeigthRadius = halfMaxHeight - halfStripeThickness;
+        ArrayList<Point2d> toRemove = new ArrayList<>();
+        for(Point2d point : outerEllipse.getCoords()){
+            if(Math.sqrt(Math.pow(point.X(), 2) / Math.pow(innerWidthRadius, 2) +
+                    Math.pow(point.Y(), 2) / Math.pow(innerHeigthRadius, 2)) <= 1){
+                toRemove.add(point);
+            }
+        }
+        outerEllipse.removeAll(toRemove);
 
         Rectangle rectangle = new Rectangle(halfStripeThickness, maxHeight);
         rectangle.translate(new Point2d(halfMaxWidth, 0.0));
-        letter_a.add(rectangle);
+
+        letter_a.add(outerEllipse).add(rectangle);
         return letter_a;
     }
 
@@ -41,24 +79,15 @@ public final class LetterFactory {
 
     // TODO
     public static BaseShape create_l() {
-        BaseShape letterL = new BaseShape();
-        letterL.add(new Rectangle(halfStripeThickness, maxHeight));
-        return letterL;
+        return new BaseShape()
+                .add(new Rectangle(halfStripeThickness, maxHeight));
     }
 
     // TODO
     public static BaseShape create_i() {
-        BaseShape letterI = new BaseShape();
-        Double heightRation = 3.0 / 4.0;
-        Double heightDiff = maxHeight * (1 - heightRation);
-        BaseShape rectangle = new Rectangle(halfStripeThickness, maxHeight * heightRation);
-        rectangle.translate(new Point2d(0.0, heightDiff));
-        letterI.add(rectangle);
-
-        Ellipse point = new Ellipse(halfStripeThickness, halfStripeThickness);
-        point.translate(new Point2d(0.0, heightDiff - halfMaxHeight));
-        letterI.add(point);
-        return letterI;
+        return new BaseShape()
+                .add(new Rectangle(halfStripeThickness, maxHeight * 3.0 / 4).translate(new Point2d(0.0, halfMaxHeight - (maxHeight * 3.0 / 8)))
+                .add(new Ellipse(halfStripeThickness, halfStripeThickness).translate(new Point2d(0.0, -halfMaxHeight + halfStripeThickness))));
     }
 
     // TODO
@@ -68,17 +97,9 @@ public final class LetterFactory {
 
     // TODO
     public static BaseShape create_V() {
-        BaseShape letterV = new BaseShape();
-        Rectangle rigthArm = new Rectangle(halfStripeThickness, maxHeight);
-        rigthArm.rotate(Math.atan(halfMaxWidth / maxHeight));
-        rigthArm.translate(new Point2d(halfMaxWidth / 2 , 0.0));
-        letterV.add(rigthArm);
-
-        Rectangle leftArm = new Rectangle(halfStripeThickness, maxHeight);
-        leftArm.rotate(-Math.atan(halfMaxWidth / maxHeight));
-        leftArm.translate(new Point2d(-halfMaxWidth / 2, 0.0));
-        letterV.add(leftArm);
-        return letterV;
+        return new BaseShape()
+                .add(new Rectangle(halfStripeThickness, maxHeight).rotate(Math.atan(halfMaxWidth / maxHeight)).translate(new Point2d(halfMaxWidth / 2, 0.0)))
+                .add(new Rectangle(halfStripeThickness, maxHeight).rotate(-Math.atan(halfMaxWidth / maxHeight)).translate(new Point2d(-halfMaxWidth / 2, 0.0)));
     }
 
     // TODO
@@ -97,27 +118,28 @@ public final class LetterFactory {
         Rectangle line = new Rectangle(halfStripeThickness, maxHeight);
         letterB.add(line);
 
+        Double innerWidthRadius = halfMaxWidth - halfStripeThickness;
+        Double innerHeigthRadius = (halfMaxHeight / 2) - halfStripeThickness;
         Ellipse topEllipse = new Ellipse(halfMaxWidth, halfMaxHeight / 2);
-        topEllipse.translate(new Point2d(halfStripeThickness / 2, -halfMaxHeight / 2));
         ArrayList<Point2d> toRemove = new ArrayList<>();
-        for(Point2d vertex : topEllipse.getCoords()){
-            if(vertex.X() < 0){
-                toRemove.add(vertex);
+        for(Point2d point : topEllipse.getCoords()){
+            if(Math.sqrt(Math.pow(point.X(), 2) / Math.pow(innerWidthRadius, 2) +
+                    Math.pow(point.Y(), 2) / Math.pow(innerHeigthRadius, 2)) <= 1){
+                toRemove.add(point);
             }
+        }
+        topEllipse.translate(new Point2d(halfStripeThickness, 0.0));
+        for(Point2d vertex : topEllipse.getCoords()){
+            if(vertex.X() < 0) toRemove.add(vertex);
         }
         topEllipse.removeAll(toRemove);
         toRemove.clear();
+        Ellipse bottomEllipse = topEllipse.clone();
+        topEllipse.translate(new Point2d(0.0, -halfMaxHeight / 2));
         letterB.add(topEllipse);
-
-        Ellipse bottomEllipse = new Ellipse(halfMaxWidth, halfMaxHeight / 2);
-        bottomEllipse.translate(new Point2d(halfStripeThickness / 2, halfMaxHeight / 2));
-        for (Point2d vertex : bottomEllipse.getCoords()){
-            if(vertex.X() < 0){
-                toRemove.add(vertex);
-            }
-        }
-        bottomEllipse.removeAll(toRemove);
+        bottomEllipse.translate(new Point2d(0.0, halfMaxHeight / 2));
         letterB.add(bottomEllipse);
+
         return letterB;
     }
 }

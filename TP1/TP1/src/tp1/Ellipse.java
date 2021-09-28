@@ -6,14 +6,24 @@ import java.util.Collection;
 public class Ellipse extends BaseShape {
     // TODO creer une ellipse avec une largeur et une longueur.
     public Ellipse(Double widthRadius, Double heightRadius) {
-        int numPoint = 200; // must be greater than 16;
+        int numPoint = 100; // must be greater than 16;
+        int innerEllipsesCount = 60;
+        Double deltaAngle = (Math.PI / numPoint);
+        Double deltaWidthRadius = widthRadius / innerEllipsesCount;
+        Double deltaHeightRadius = heightRadius / innerEllipsesCount;
         Collection<Point2d> points = new ArrayList<Point2d>();
-        Double deltaX = (widthRadius * 2) / numPoint;
-        for(int i = 0; i < numPoint; i++){
-            Double x = -widthRadius + i * deltaX;
-            Double firstY = Math.sqrt((1 - ((x * x) / (widthRadius * widthRadius))) * heightRadius * heightRadius);
-            points.add(new Point2d(x, firstY));
-            points.add(new Point2d(x, -firstY));
+        for(int j = 0; j < innerEllipsesCount; j++){
+            for(int i = 0; i < numPoint; i++){
+                Double angle = i * deltaAngle;
+                Double currentWidthRadius = widthRadius - j * deltaWidthRadius;
+                Double currentHeightRadius = heightRadius - j * deltaHeightRadius;
+                Double radius = (currentWidthRadius * currentHeightRadius) / Math.sqrt((currentHeightRadius * Math.cos(angle)) * (currentHeightRadius * Math.cos(angle)) +
+                        (currentWidthRadius * Math.sin(angle)) * (currentWidthRadius * Math.sin(angle)));
+                Double x = Math.cos(angle) * radius;
+                Double y = Math.sin(angle) * radius;
+                points.add(new Point2d(x, y));
+                points.add(new Point2d(x, -y));
+            }
         }
         addAll(points);
     }
