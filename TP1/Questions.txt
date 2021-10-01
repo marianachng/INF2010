@@ -1,17 +1,22 @@
 1.Identifiez un patron de conception autre que Fluent Builder dans le tp.
 	b. Donnez un brève description du patron et comment it est utilisé dans le tp.
 
-
-//Espace pour écrire 
-//
-//
-//
+Dans ce TP, un patron de conception présent est celui du template method. Les formes de Rectangle.java et de Ellipse.java sont chacunes
+des implementations différentes de BaseShape dans lesquelles juste certaines sections des algorithmes sont modifiées (la logique de choix de points constituants 
+la forme entre autres). Ces classes dérivées permettent la création d'une forme unique, sans devoir redéfinir la classe BaseShape à chaque fois.
 
 2. Donnez une explication du patron composite.
-	b. Comment le patron composite aurait pu être utilisé dans ce travail pratique? 
 
-//Espace pour écrire 
-//
-//
-//
-	   
+Le patron composite est un patron de conception autour de la structure du code. Son intention est de traiter les objets individuels
+ainsi que les objets multiples de façon uniforme. Des objets sont ainsi imbriqués dans une arborescence et chaque object est traité 
+individuellement à travers le composite (conteneur) (le conteneur partage un parent avec les elements de l'arborescence). Chacun des objects ainsi que l'ensemble
+des objets peuvent être traîtés comme un seul objet (grâce à l'interface commun et la délégation de la charge).
+	
+b. Comment le patron composite aurait pu être utilisé dans ce travail pratique? 
+
+Dans notre cas, cela se traduit à l'utilisation d'une composition de formes distinctes formant une forme finale plus complexe à travers la classe 
+BaseShape. Le patron composite serait utile comme la forme plus complexe que l'on veut construire et manipuler. Celui-ci est un assemblage de plusieurs formes, 
+de type BaseShape, et ce patron permettrait de traiter tous les objets de manière uniforme (à travers la forme qui est un assemblage de tous les autres). 
+On a donc pas à traiter toutes les composantes séparement et tout se ferait à travers l'assemblage au complet grâce au patron composite. L'implémentation
+se ferait en definissant une classe pour chaque lettre (composite) et definir sa composition à travers les classe concrete de forme (rectangle, ellipse qui sont
+les feuilles). 
