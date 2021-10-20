@@ -1,5 +1,8 @@
 package tp2;
 
+import javax.xml.crypto.Data;
+import java.security.Key;
+
 public class HashMap<KeyType, DataType> {
 
     private static final int DEFAULT_CAPACITY = 20;
@@ -78,7 +81,39 @@ public class HashMap<KeyType, DataType> {
      * reassigns all contained values within the new map
      */
     private void rehash() {
-        return;
+        /*this.capacity *= CAPACITY_INCREASE_FACTOR;
+        Node<KeyType, DataType>[] newMap = new Node[capacity];
+        for(int i = 0; i < map.length; i++){
+            Node<KeyType, DataType> currentNode = map[i];
+            while (currentNode != null){
+                Node<KeyType, DataType> nextNode = currentNode.next;
+                int newIndex = hash(currentNode.key);
+                if(newMap[newIndex] == null){
+                    newMap[newIndex] = currentNode;
+                    currentNode.next = null;
+                }else{
+                    Node<KeyType, DataType> firstNode = newMap[newIndex];
+                    newMap[newIndex] = currentNode;
+                    currentNode.next = firstNode;
+                }
+                currentNode = nextNode;
+            }
+        }
+        map = newMap;*/
+        //no need to change size but might have to change the compression ratio
+
+
+        HashMap<KeyType, DataType> newMap = new HashMap<>(capacity * CAPACITY_INCREASE_FACTOR);
+        for(int i = 0; i < map.length; i++){
+            Node<KeyType, DataType> currentNode = map[i];
+            while (currentNode != null){
+                newMap.put(currentNode.key, currentNode.data);
+                currentNode = currentNode.next;
+            }
+        }
+        map = newMap.map;
+        size = newMap.size;
+        capacity = newMap.capacity;
     }
 
     /** TODO
@@ -87,6 +122,14 @@ public class HashMap<KeyType, DataType> {
      * @return if key is already used in map
      */
     public boolean containsKey(KeyType key) {
+        int index = hash(key);
+        Node<KeyType, DataType> currentNode = map[index];
+        while(currentNode != null){
+            if(currentNode.key.equals(key)){
+                return true;
+            }
+            currentNode = currentNode.next;
+        }
         return false;
     }
 
@@ -96,6 +139,17 @@ public class HashMap<KeyType, DataType> {
      * @return DataType instance attached to key (null if not found)
      */
     public DataType get(KeyType key) {
+        int index = hash(key);
+        boolean contained = containsKey(key);
+        if(contained){
+            Node<KeyType, DataType> currentNode = map[index];
+            while (currentNode != null){
+                if(currentNode.key.equals(key)){
+                    return currentNode.data;
+                }
+                currentNode = currentNode.next;
+            }
+        }
         return null;
     }
 
@@ -105,7 +159,32 @@ public class HashMap<KeyType, DataType> {
      * @return Old DataType instance at key (null if none existed)
      */
     public DataType put(KeyType key, DataType value) {
-        return null;
+        boolean containsKey = this.containsKey(key);
+        int index = hash(key);
+        DataType oldData = null;
+        if(containsKey){
+           Node<KeyType, DataType> currentNode = map[index];
+           while (!currentNode.key.equals(key)){
+               currentNode = currentNode.next;
+           }
+           oldData = currentNode.data;
+           currentNode.data = value;
+        }else {
+            Node<KeyType, DataType> newNode = new Node<>(key, value);
+            if(map[index] == null){
+                map[index] = newNode;
+            }else {
+                //insert in the first position of the linked list, so we don't have to iterate in the list
+                Node<KeyType, DataType> oldFirstNode = map[index];
+                map[index] = newNode;
+                newNode.next = oldFirstNode;
+            }
+            size++;
+            if(needRehash()){
+                rehash();
+            }
+        }
+        return oldData;
     }
 
     /**TODO
@@ -114,6 +193,23 @@ public class HashMap<KeyType, DataType> {
      * @return Old DataType instance at key (null if none existed)
      */
     public DataType remove(KeyType key) {
+        boolean contained = this.containsKey(key);
+        if(contained){
+            int index = hash(key);
+            Node<KeyType, DataType> currentNode = map[index];
+            Node<KeyType, DataType> previousNode = null;
+            while (!currentNode.key.equals(key)){
+                previousNode = currentNode;
+                currentNode = currentNode.next;
+            }
+            if(previousNode == null){
+                map[index] = currentNode.next;
+            }else{
+                previousNode.next = currentNode.next;
+            }
+            size--;
+            return currentNode.data;
+        }
         return null;
     }
 
@@ -121,6 +217,10 @@ public class HashMap<KeyType, DataType> {
      * Removes all nodes contained within the map
      */
     public void clear() {
+        for(int i = 0; i < map.length; i++){
+            map[i] = null; //removing the first element is enough to clear the linked list, the garbage collector will do the rest;
+        }
+        size = 0;
     }
 
     /**
@@ -138,4 +238,20 @@ public class HashMap<KeyType, DataType> {
             next = null;
         }
     }
+
+    //To remove
+    /*public void print(){
+        for(int i = 0; i < capacity; i++){
+            Node<KeyType, DataType> currentNode = map[i];
+            if (currentNode == null){
+                continue;
+            }
+            while(currentNode != null) {
+                System.out.print(currentNode.data + " ");
+                currentNode = currentNode.next;
+            }
+            System.out.print(" hashing : " + i);
+            System.out.println("");
+        }
+    }*/
 }
