@@ -81,28 +81,6 @@ public class HashMap<KeyType, DataType> {
      * reassigns all contained values within the new map
      */
     private void rehash() {
-        /*this.capacity *= CAPACITY_INCREASE_FACTOR;
-        Node<KeyType, DataType>[] newMap = new Node[capacity];
-        for(int i = 0; i < map.length; i++){
-            Node<KeyType, DataType> currentNode = map[i];
-            while (currentNode != null){
-                Node<KeyType, DataType> nextNode = currentNode.next;
-                int newIndex = hash(currentNode.key);
-                if(newMap[newIndex] == null){
-                    newMap[newIndex] = currentNode;
-                    currentNode.next = null;
-                }else{
-                    Node<KeyType, DataType> firstNode = newMap[newIndex];
-                    newMap[newIndex] = currentNode;
-                    currentNode.next = firstNode;
-                }
-                currentNode = nextNode;
-            }
-        }
-        map = newMap;*/
-        //no need to change size but might have to change the compression ratio
-
-
         HashMap<KeyType, DataType> newMap = new HashMap<>(capacity * CAPACITY_INCREASE_FACTOR);
         for(int i = 0; i < map.length; i++){
             Node<KeyType, DataType> currentNode = map[i];
@@ -238,20 +216,4 @@ public class HashMap<KeyType, DataType> {
             next = null;
         }
     }
-
-    //To remove
-    /*public void print(){
-        for(int i = 0; i < capacity; i++){
-            Node<KeyType, DataType> currentNode = map[i];
-            if (currentNode == null){
-                continue;
-            }
-            while(currentNode != null) {
-                System.out.print(currentNode.data + " ");
-                currentNode = currentNode.next;
-            }
-            System.out.print(" hashing : " + i);
-            System.out.println("");
-        }
-    }*/
 }
