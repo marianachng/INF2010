@@ -1,9 +1,8 @@
 package tp2;
 
 import java.io.*;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.HashMap;
-import java.util.Scanner;
 
 public final class Interview {
 
@@ -29,16 +28,12 @@ public final class Interview {
     public static Integer compareFrequencies(String filename1, String filename2) throws IOException {
         HashMap<Character, Integer> firstTextMap = getFrequencyHashTable(readFile(filename1));
         HashMap<Character, Integer> secondTextMap = getFrequencyHashTable(readFile(filename2));
-        Integer frequencyDiffSum = 0;
 
-        ArrayList<Character> allKeys = new ArrayList<>();
+        Set<Character> allKeys = new TreeSet<>();//we don't want shared keys to be added twice;
         allKeys.addAll(firstTextMap.keySet());
-        for (Character key : secondTextMap.keySet()) {
-            if (!allKeys.contains(key)) {
-                allKeys.add(key);
-            }
-        }
+        allKeys.addAll(secondTextMap.keySet());
 
+        Integer frequencyDiffSum = 0;
         for (Character key : allKeys) {
             Integer frequencyFirstMap = firstTextMap.get(key);
             Integer frequencySecondMap = secondTextMap.get(key);
@@ -46,7 +41,7 @@ public final class Interview {
                 frequencyDiffSum += Math.abs(frequencyFirstMap - frequencySecondMap);
             } else if (frequencyFirstMap == null) {
                 frequencyDiffSum += frequencySecondMap;
-            } else if (frequencySecondMap == null) {
+            } else{
                 frequencyDiffSum += frequencyFirstMap;
             }
         }

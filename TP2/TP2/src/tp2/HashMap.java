@@ -1,8 +1,5 @@
 package tp2;
 
-import javax.xml.crypto.Data;
-import java.security.Key;
-
 public class HashMap<KeyType, DataType> {
 
     private static final int DEFAULT_CAPACITY = 20;
@@ -82,9 +79,9 @@ public class HashMap<KeyType, DataType> {
      */
     private void rehash() {
         HashMap<KeyType, DataType> newMap = new HashMap<>(capacity * CAPACITY_INCREASE_FACTOR);
-        for(int i = 0; i < map.length; i++){
-            Node<KeyType, DataType> currentNode = map[i];
-            while (currentNode != null){
+        for (Node<KeyType, DataType> headNode : map) {
+            Node<KeyType, DataType> currentNode = headNode;
+            while (currentNode != null) {
                 newMap.put(currentNode.key, currentNode.data);
                 currentNode = currentNode.next;
             }
