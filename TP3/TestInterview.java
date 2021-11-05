@@ -7,8 +7,7 @@ public class TestInterview {
         TestHelper.printHeader("Debut des tests de l'arbre de companies");
         Method[] methods = this.getClass().getDeclaredMethods();
         for (Method m : methods) {
-            //j'ai ajoute && !m.getName().equals("compareTrees"), car n'est pas un test;
-            if (!m.getName().equals("test") && !m.getName().equals("compareTrees")) {
+            if (!m.getName().equals("test")) {
                 try {
                     m.invoke(this);
                 }

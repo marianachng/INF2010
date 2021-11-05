@@ -21,8 +21,7 @@ public class TestBinary {
     }
 
     private void testRandom() throws Exception {
-        //Integer max = 1000;
-        Integer max = 10;
+        Integer max = 1000;
         BinarySearchTree<Integer> tree = new BinarySearchTree<>(max / 2);
         List<Integer> list = new ArrayList<>();
         list.add(max / 2);
