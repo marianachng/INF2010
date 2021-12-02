@@ -57,6 +57,7 @@ public class Heap<ValueType extends Comparable<? super ValueType>> implements It
         }
 
         /* TODO Constuire le monceau avec les noeuds dans "elements" */
+        //O(n)
         public void buildHeap(){
             for(int i = size() / 2; i > 0; i--){
                 percolateDown(i);
@@ -72,6 +73,7 @@ public class Heap<ValueType extends Comparable<? super ValueType>> implements It
         }
 
         /* TODO Ajouter un element dans le monceaux. */
+        //  O(log(n)) or O(1) ?
         public void insert(ValueType value){
             int insertIndex = size();
             while (!compare(elements.get(insertIndex), value)){
@@ -82,6 +84,7 @@ public class Heap<ValueType extends Comparable<? super ValueType>> implements It
         }
 
         /* TODO Completer l'implementation des conditions de percolateDown pour un heap */
+        // O(log(n))
         private void percolateDown(int index){
             int child;
             ValueType temp = elements.get(index);

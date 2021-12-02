@@ -7,7 +7,7 @@ public class Interview {
 
             // Ne pas modifier la ligne suivante
             PriorityQueue<Integer> heap = new PriorityQueue<>(Comparator.reverseOrder());
-
+            // O(nlog(n))
             for(int box : boxes) heap.add(box);
             while (heap.size() > 1) {
                 int boite1 = heap.poll();
