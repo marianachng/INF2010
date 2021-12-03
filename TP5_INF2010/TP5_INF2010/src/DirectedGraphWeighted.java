@@ -51,8 +51,8 @@ public class DirectedGraphWeighted {
         /* NE PAS MODIFIER CE CODE */
 
         /* TODO Add all of the vertices to the Heap start at Index 1. The default cost should be the largest possible value for an integer */
-        vertices.poll(); //enlever l'element a l'index 1 qui est present par default;
-        for(int i = 0; i < vertexCapacity; i++) vertices.add(new Vertex(Integer.MAX_VALUE, i));
+
+        for(int i = 1; i < vertexCapacity; i++) vertices.add(new Vertex(Integer.MAX_VALUE, i));
 
         while(true){
             Vertex v = vertices.findSmallestUnknown();

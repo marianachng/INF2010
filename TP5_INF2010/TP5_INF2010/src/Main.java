@@ -22,7 +22,7 @@ public class Main {
 
         System.out.println(graph2.toString());
 
-        //Tests test = new Tests(graph, graph2, v, new Interview() );
+        Tests test = new Tests(graph, graph2, v, new Interview());
     }
 }
 

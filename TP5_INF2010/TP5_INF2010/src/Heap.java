@@ -76,7 +76,7 @@ public class Heap {
     public void decreaseKey(Vertex v, int newCost){
         for(int i = 1; i <= size; i++){
             if(Heap[i].index == v.index){
-                v.cost = newCost;
+                Heap[i].cost = newCost;
                 minHeapify(i);
                 return;
             }
@@ -87,10 +87,11 @@ public class Heap {
     public Vertex findSmallestUnknown(){
         Vertex smallestUnknown = null;
         for(int i = 1; i <= size ; i++){
-            if(smallestUnknown == null || (smallestUnknown.compareTo(Heap[i]) > 0 && !Heap[i].known)){
+            if(!Heap[i].known && (smallestUnknown == null || (smallestUnknown.compareTo(Heap[i]) > 0))){
                 smallestUnknown = Heap[i];
             }
         }
+
         return smallestUnknown;
     }
 
@@ -105,6 +106,14 @@ public class Heap {
         }
 
         return popped;
+    }
+
+    ////////////////
+    public void print(){
+        for(int i = 1; i <= size; i++){
+            System.out.print("index : " + Heap[i].index + "  known : " + Heap[i].known + "  cost : " + Heap[i].cost + "  ");
+        }
+        System.out.println("");
     }
 }
 
