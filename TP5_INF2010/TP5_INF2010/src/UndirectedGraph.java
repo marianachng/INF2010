@@ -18,9 +18,9 @@ public class UndirectedGraph implements Graph {
         /*TODO Implement necessary conditions for connect and justify each condition */
 
         // verification des parametres
-        if (v1<0 || v1>= this.nodeQuantity) return;
-        if (v2<0 || v2>= this.nodeQuantity) return;
-        if (neighbours[v1].contains(v2) ) return;
+        if (v1<0 || v1>= this.nodeQuantity) return; // les sommet n'ont pas d'index negatif et l'index est inferieur au nombre de sommets
+        if (v2<0 || v2>= this.nodeQuantity) return; // les sommet n'ont pas d'index negatif et l'index est inferieur au nombre de sommets
+        if (neighbours[v1].contains(v2) ) return; // si le voisin existe deja, on ne veut l'ajouter une seconde fois
         neighbours[v1].add(v2);
         neighbours[v2].add(v1);
         graphEdges++;
