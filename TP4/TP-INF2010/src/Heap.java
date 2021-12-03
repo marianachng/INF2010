@@ -57,7 +57,7 @@ public class Heap<ValueType extends Comparable<? super ValueType>> implements It
         }
 
         /* TODO Constuire le monceau avec les noeuds dans "elements" */
-        //O(n)
+        //O(n*Log(n)), car on itère size() / 2 fois et on fait une operation Log(n) (percolateDown) à chaque itération
         public void buildHeap(){
             for(int i = size() / 2; i > 0; i--){
                 percolateDown(i);
@@ -73,7 +73,7 @@ public class Heap<ValueType extends Comparable<? super ValueType>> implements It
         }
 
         /* TODO Ajouter un element dans le monceaux. */
-        //  O(log(n)) or O(1) ?
+        //  O(log(n)), car il faut itérer à travers les niveau de l'arbre jusqu'à qu'on trouve un parent qui répond au critère de comparaison
         public void insert(ValueType value){
             int insertIndex = size();
             while (!compare(elements.get(insertIndex), value)){

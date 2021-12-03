@@ -3,13 +3,14 @@ import java.util.PriorityQueue;
 
 public class Interview {
 
+        // O(nlog(n)), car on a 2 fois des operations O(nlog(n))
         public int lastBox(int[] boxes){
-
             // Ne pas modifier la ligne suivante
             PriorityQueue<Integer> heap = new PriorityQueue<>(Comparator.reverseOrder());
-            // O(nlog(n))
-            for(int box : boxes) heap.add(box);
-            while (heap.size() > 1) {
+
+            for(int box : boxes) heap.add(box);// O(nlog(n))
+
+            while (heap.size() > 1) { //O(nlog(n))
                 int boite1 = heap.poll();
                 int boite2 = heap.poll();
                 if (boite1 != boite2) {
