@@ -76,8 +76,10 @@ public class Heap {
     public void decreaseKey(Vertex v, int newCost){
         for(int i = 1; i <= size; i++){
             if(Heap[i].index == v.index){
-                Heap[i].cost = newCost;
-                minHeapify(i);
+                if(Heap[i].cost > newCost){
+                    Heap[i].cost = newCost;
+                    minHeapify(i);
+                }
                 return;
             }
         }

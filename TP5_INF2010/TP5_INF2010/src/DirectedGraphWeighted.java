@@ -60,13 +60,14 @@ public class DirectedGraphWeighted {
             v.known = true;
             for(Vertex w: adj(v.index)){
                 /* TODO Decrease the cost of the vertex in the Heap using decreaseKey if conditions are met */
-                if(w.compareTo(v) < 0) vertices.decreaseKey(v, w.cost);
+                if(!w.known) vertices.decreaseKey(w, w.cost + v.cost);
             }
         }
 
         /*TODO Add up the total cost of the elements in the Heap */
         while(!vertices.isEmpty){
-            totalCost += vertices.poll().cost;
+            Vertex v = vertices.poll();
+            if(v.cost != Integer.MAX_VALUE) totalCost += v.cost;
         }
 
         /*
@@ -84,8 +85,8 @@ public class DirectedGraphWeighted {
     Le nombre d'iteration maximal serait le nombre de noeud - 1, dans le cas d'un noeud est connecte a tous les autres noeuds (fortement connexe)
 
     2. Le pire cas serait celui ou un sommet est connecte a tous les autres noeuds du graphe et
-    dont l'acces se fait en ordre decroissant par rapport au cout, on aura donc une modification a chaque iteration
-    du loop, donc n = noeud - 1 modifications.
+    que celui-ci est le premier noeud que l'on visite. Ainsi, si l'acces aux voisins se fait en ordre decroissant par rapport au cout,
+    on aura donc une modification a chaque iteration du loop, donc n = noeud - 1 modifications.
 
     3a. 10 * log2(10)
     3b. 100 * log2(100)
