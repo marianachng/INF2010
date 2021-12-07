@@ -32,7 +32,7 @@ public class Interview {
                 if (!((newX >= 0 && newX < m) && (newY >= 0 && newY < n))/*TODO Condition qui assure qu'on est toujours dans les bornes de la matrice */) continue;
 
                 int newCost = costs[x][y].cost/*TODO Calculer le nouveau cout selon le deplacement*/;
-                if((i + 1) != grid[x][y].cost) newCost += 1;
+                if((i + 1) != grid[x][y].cost) newCost += 1; // on verifie si on change de direction
                 if (costs[newX][newY].cost > newCost) {
                     /*TODO Mettre le nouveau cout au bonne emplacement dans la matrice & l'ajouter au heap.*/
                     costs[newX][newY].cost = newCost;

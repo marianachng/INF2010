@@ -1,4 +1,4 @@
-import java.util.*;
+
 public class Heap {
     public final Vertex[] Heap;
     private int size;
@@ -108,14 +108,6 @@ public class Heap {
         }
 
         return popped;
-    }
-
-    ////////////////
-    public void print(){
-        for(int i = 1; i <= size; i++){
-            System.out.print("index : " + Heap[i].index + "  known : " + Heap[i].known + "  cost : " + Heap[i].cost + "  ");
-        }
-        System.out.println("");
     }
 }
 
